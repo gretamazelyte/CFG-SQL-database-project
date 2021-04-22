@@ -1,0 +1,62 @@
+-- Inner join Patient name, surname, telephone
+
+SELECT pn.Patient_Name, pn.Patient_Surname, pc.Telephone
+FROM  patient_name pn
+INNER JOIN patient_contact pc
+ON pn.Patient_ID = pc.Patient_ID;
+
+-- Inner join Patient surname, diagnosis, side effects
+
+SELECT pn.Patient_Surname, pd.Diagnosis
+FROM patient_name pn 
+INNER JOIN patient_diagnosis pd
+ON pn.Patient_ID = pd.Patient_ID;
+
+-- Left outer join
+
+SELECT pn.Patient_Name, pn.Patient_Surname, pc.Consent_Form_Signed, pc.Date_Informed_Consent_Signed
+FROM patient_name pn
+LEFT JOIN patient_consent pc
+ON pn.Patient_ID = pc.Patient_ID;
+
+-- Right outer join
+
+SELECT pc.Telephone, pse.Side_Effect
+FROM patient_contact pc 
+RIGHT JOIN patient_side_effects pse
+ON pc.Patient_ID = pse.Patient_ID;
+
+SELECT pt.Treatment_placebo, pn.Patient_Name
+FROM patient_trial pt
+RIGHT JOIN patient_name pn
+ON pt.Patient_ID = pn.Patient_ID;
+
+-- Cross join (Does not return anything significant, just an example)
+
+SELECT A1.*, A2.*
+FROM
+patient_contact AS A1
+CROSS JOIN 
+patient_name AS A2;
+
+-- Placebo vs Positive
+
+SELECT
+pn.Patient_Surname AS Patient_Surname,
+pt.Treatment_placebo AS Treatment_placebo,
+pt.Condition_report AS Positive_Effect
+FROM
+patient_name AS pn
+INNER JOIN patient_trial AS pt ON pt.Patient_ID = pn.Patient_ID
+WHERE pt.Condition_report = 'Positive' AND pt.Treatment_placebo = 'Placebo';
+
+-- Drug vs Positive 
+
+SELECT
+pn.Patient_Surname AS Patient_Surname,
+pt.Treatment_placebo AS Treatment_placebo,
+pt.Condition_report AS Positive_Effect
+FROM
+patient_name AS pn
+INNER JOIN patient_trial AS pt ON pt.Patient_ID = pn.Patient_ID
+WHERE pt.Condition_report = 'Positive' AND pt.Treatment_placebo = 'DRUG';
