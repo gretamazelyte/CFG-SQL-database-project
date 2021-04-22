@@ -1,0 +1,64 @@
+-- Query with Subquery finding rhe heart rate and bp of all male patients
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "Male" )
+Group By Patient_ID;
+
+-- Query to find heart rate and bp of female patients 
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "Female" )
+Group By Patient_ID;
+
+-- Query to find heart rate and bp of non-binary patients 
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "Non-binary" )
+Group By Patient_ID;
+
+-- Query to find heart rate and bp of gender-neutral patients 
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "Gender-neutral" )
+Group By Patient_ID;
+
+-- Query to find heart rate and bp of gender-queer patients 
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "gender-queer" )
+Group By Patient_ID;
+
+-- Query to find heart rate and bp of gender-fluid patients 
+SELECT Patient_ID, Heart_Rate_bpm, Systolic_Blood_Pressure_mmHg
+from PATIENT_MEDICAL_REPORT
+WHERE Patient_ID IN
+(SELECT Patient_ID
+from Patient_Information
+where Patient_Gender = "Gender-fluid" )
+Group By Patient_ID;
+
+
+
+-- Query with patient with Angina and contact number and email addresses. 
+SELECT PATIENT_ID, Address, Postcode, Telephone
+From PATIENT_CONTACT
+WHERE PATIENT_ID IN 
+(SELECT PATIENT_ID
+FROM PATIENT_DIAGNOSIS
+WHERE DIAGNOSIS = "ANGINA")
+GROUP BY PATIENT_ID;
