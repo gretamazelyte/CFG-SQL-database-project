@@ -1,0 +1,19 @@
+CREATE OR REPLACE VIEW vw_patient_trial AS
+SELECT
+Patient_ID,
+Condition_report,
+Height_Centimetres,
+Weight_Kilograms , 
+Heart_Rate_bpm,
+Systolic_Blood_Pressure_mmHg,
+Date_of_birth, 
+Patient_Gender, 
+Patient_Race,
+Specified_other_race
+FROM PATIENT_TRIAL 
+INNER JOIN PATIENT_MEDICAL_REPORT USING (PATIENT_ID)
+INNER JOIN PATIENT_INFORMATION USING (PATIENT_ID)
+WHERE CONDITION_REPORT="POSITIVE"
+GROUP BY PATIENT_ID;
+
+SELECT* FROM vw_patient_trial;
