@@ -1,0 +1,115 @@
+CREATE DATABASE medical_information;
+
+USE medical_information;
+
+-- Create patient identification table
+
+CREATE TABLE PATIENT_NAME
+  (Patient_ID INTEGER NOT NULL,
+  Patient_Name VARCHAR(15) NOT NULL, 
+  Patient_Surname VARCHAR(15) NOT NULL,
+  PRIMARY KEY (Patient_ID) 
+);
+
+-- Create table with date_of_birth and gender/sex
+
+CREATE TABLE PATIENT_INFORMATION
+  (Date_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Date_of_Birth DATE, 
+  Patient_Gender VARCHAR(15) NOT NULL,
+  Patient_Race VARCHAR(50) NOT NULL, 
+  Specified_other_race VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Date_ID),
+  CONSTRAINT patient_date_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+-- Create table with address, telephone
+
+CREATE TABLE PATIENT_CONTACT
+  (Contact_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Address VARCHAR(250)  NOT NULL,
+  Postcode VARCHAR(10) NOT NULL, 
+  Telephone VARCHAR(15),
+  PRIMARY KEY (Contact_ID),
+  CONSTRAINT patient_contact_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+
+-- Create table with Diagnosis and Treatment
+
+CREATE TABLE PATIENT_DIAGNOSIS
+  (Diagnosis_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Diagnosis VARCHAR(50) NOT NULL, 
+  Treatment_Drug VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Diagnosis_ID),
+  CONSTRAINT patient_diagnosis_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+-- Create table with Vitamin Treatment;
+
+CREATE TABLE PATIENT_TRIAL
+  (Trial_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Treatment_placebo VARCHAR(50) NOT NULL,
+  Condition_report VARCHAR(50) NOT NULL, 
+  PRIMARY KEY (Trial_ID),
+  CONSTRAINT patient_trial_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+-- Create table with Side Effects;
+
+CREATE TABLE PATIENT_SIDE_EFFECTS
+  (Effect_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Side_Effect VARCHAR(50) NOT NULL, 
+  PRIMARY KEY (Effect_ID),
+  CONSTRAINT patient_effect_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+-- Create table with Patient_Reference;
+
+CREATE TABLE PATIENT_REFERENCE (
+  Patient_ID INT NOT NULL,
+  Date_ID INT NOT NULL,
+  Contact_ID INT NOT NULL,
+  Diagnosis_ID INT NOT NULL,
+  Trial_ID INT NOT NULL,
+  Effect_ID INT NOT NULL,
+  Consent_ID INT NOT NULL,
+  Medical_Report_ID INT NOT NULL
+);
+
+
+-- Create table Patient consent;
+
+CREATE TABLE PATIENT_CONSENT (
+  Consent_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Consent_Form_Signed varchar(255) NOT NULL,
+  Date_Informed_Consent_Signed date,
+  PRIMARY KEY (Consent_ID),
+  CONSTRAINT patient_consent_ID FOREIGN KEY (Patient_ID)
+  REFERENCES PATIENT_NAME(Patient_ID)
+);
+
+-- Create table medical report;
+
+CREATE TABLE PATIENT_MEDICAL_REPORT (
+  Medical_Report_ID INTEGER NOT NULL,
+  Patient_ID INTEGER NOT NULL,
+  Height_Centimetres INTEGER NOT NULL, 
+  Weight_Kilograms  INTEGER NOT NULL, 
+  Heart_Rate_bpm INTEGER NOT NULL,
+  Systolic_Blood_Pressure_mmHg INTEGER NOT NULL, 
+  PRIMARY KEY (Medical_Report_ID),
+  CONSTRAINT patient_medical_report_ID FOREIGN KEY (Patient_ID) 
+  REFERENCES PATIENT_NAME(Patient_ID) 
+);
