@@ -1,0 +1,30 @@
+-- Creating function
+
+DELIMITER //
+CREATE FUNCTION falsepositive(
+    Condition_report VARCHAR(50),
+    Treatment_placebo VARCHAR(50)
+) 
+RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+    DECLARE RESULT VARCHAR(20);
+    IF (Condition_report = 'Positive' AND Treatment_placebo = 'Placebo') THEN
+        SET RESULT = 'YES';
+    ELSEIF (Condition_report = 'Positive' AND Treatment_placebo = 'Drug') THEN
+        SET RESULT = 'NO';
+	ELSEIF (Condition_report = 'Neutral' AND Treatment_placebo = 'Placebo') THEN 
+		SET RESULT = 'NO RESULT';
+	ELSEIF (Condition_report = 'Neutral' AND Treatment_placebo = 'Drug') THEN 
+		SET RESULT = 'NO RESULT';
+    END IF;
+    RETURN (RESULT);
+END//
+DELIMITER ;
+
+SELECT 
+    Condition_report,
+    Treatment_placebo,
+    falsepositive(Condition_report, Treatment_placebo)
+FROM
+    patient_trial;
