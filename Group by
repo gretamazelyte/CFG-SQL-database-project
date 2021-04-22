@@ -1,0 +1,11 @@
+-- Group by diagnosis and treatment given
+SELECT Distinct Patient_ID, Diagnosis, Treatment_Drug
+FROM Patient_Diagnosis
+GROUP BY Treatment_Drug
+ORDER BY Diagnosis;
+
+-- Finding out how many patients had a postive response compared to how many had a neutral response 
+SELECT Sum(Condition_report="positive"), Sum(condition_report="neutral")
+FROM Patient_Trial
+GROUP BY CONDITION_REPORT
+ORDER BY Condition_REPORT;
