@@ -1,0 +1,20 @@
+-- Create Stored Procedure
+
+DELIMITER //
+
+CREATE PROCEDURE InsertValue(
+IN Patient_ID INT, 
+IN Patient_Name VARCHAR(20),
+IN Patient_Surname VARCHAR(30))
+BEGIN
+
+INSERT INTO patient_name(Patient_ID, Patient_Name, Patient_Surname)
+VALUES (Patient_ID, Patient_Name, Patient_Surname);
+
+END//
+-- Change Delimiter again
+DELIMITER ;
+
+CALL InsertValue(131, 'John', 'Smith');
+
+SELECT * FROM Patient_name;
