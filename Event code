@@ -1,0 +1,29 @@
+-- CREATING AN EVENT 
+SHOW PROCESSLIST;
+SET GLOBAL event_scheduler= On ;
+
+
+DELIMITER //
+CREATE EVENT Consent_Clinical_Trial
+ON SCHEDULE AT NOW() + INTERVAL 1 MINUTE
+DO BEGIN 
+-- update the patient_consent table.
+	    UPDATE PATIENT_CONSENT
+	    SET CONSENT_FORM_SIGNED = "YES", DATE_INFORMED_CONSENT_SIGNED = "2020-08-31"
+	    WHERE Consent_ID = 820;
+   -- insert patient 110 results in clinical trial  
+  INSERT INTO PATIENT_TRIAL(Trial_ID, Patient_ID, Treatment_placebo, Condition_report)
+  VALUES(510, 110, "Placebo", "Neutral");
+ END //
+ DELIMITER ; 
+ 
+SELECT * FROM PATIENT_CONSENT;
+SELECT * FROM PATIENT_TRIAL; 
+
+DROP EVENT Consent_Clinical_Trial;
+
+--UPDATE PATIENT_CONSENT
+--SET CONSENT_FORM_SIGNED = "NO", DATE_INFORMED_CONSENT_SIGNED = NULL
+ --WHERE Consent_ID = 820;
+    
+ --DELETE FROM PATIENT_TRIAL;
